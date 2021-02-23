@@ -4,6 +4,7 @@ import math
 
 # --- Constants ---
 AGENT_COUNT = 50
+AGENT_INFECTED_COUNT = 1
 AGENT_SPEED = 0.5
 AGENT_FRAMES_BETWEEN_UPDATE = 120
 
@@ -71,13 +72,18 @@ class Simulation(arcade.Window):
 
             # Create the agent and add it to the list
             agent = Agent(position)
-            infect = random.randint(0, 1)
-            if infect == 1:
-                agent.color = (255, 0, 0)
-                self.ennemis_list.append(agent)
-            else:
-                agent.color = (255, 255, 255)
-                self.agent_list.append(agent)
+            agent.color = (255, 255, 255)
+            self.agent_list.append(agent)
+        # Create the agents
+        for i in range(AGENT_INFECTED_COUNT):
+            # Pick a random position on the screen
+            position = (random.randrange(SCREEN_WIDTH), random.randrange(SCREEN_HEIGHT))
+
+            # Create the agent and add it to the list
+            agent = Agent(position)
+            agent.color = (255, 0, 0)
+            self.ennemis_list.append(agent)
+
 
     def update(self, delta_time):
         # Update all the agents
