@@ -5,8 +5,8 @@ import math
 # --- Constants ---
 AGENT_COUNT = 50
 AGENT_INFECTED_COUNT = 1
-AGENT_SPEED = 0.5
-AGENT_FRAMES_BETWEEN_UPDATE = 120
+AGENT_SPEED = 0.2
+AGENT_FRAMES_BETWEEN_UPDATE = 200
 
 CIRCLE_RADIUS = 30
 AGENT_WHITE = (255, 255, 255)
@@ -44,7 +44,6 @@ class Agent(arcade.SpriteCircle):
         # Move, but stay within bounds of the screen
         self.center_x = arcade.clamp(self.center_x + self.speed[0], 0, SCREEN_WIDTH)
         self.center_y = arcade.clamp(self.center_y + self.speed[1], 0, SCREEN_HEIGHT)
-
 
     def change_speed(self):
         # Pick a random direction
@@ -84,12 +83,13 @@ class Simulation(arcade.Window):
             agent.color = (255, 0, 0)
             self.ennemis_list.append(agent)
 
-
     def update(self, delta_time):
         # Update all the agents
         for enemy in self.agent_list:
             any_collisions = arcade.check_for_collision_with_list(enemy, self.ennemis_list)
             if len(any_collisions) > 0:
+                self.ennemis_list.append(enemy)
+                self.agent_list.remove(enemy)
                 enemy.color = (255, 0, 0)
                 enemy.update()
 
