@@ -5,12 +5,12 @@ import math
 # --- Constants ---
 AGENT_COUNT = 50
 AGENT_INFECTED_COUNT = 1
-AGENT_SPEED = 0.2
-AGENT_FRAMES_BETWEEN_UPDATE = 200
+AGENT_SPEED = 5
+AGENT_FRAMES_BETWEEN_UPDATE = 120
 
 CIRCLE_RADIUS = 30
-AGENT_WHITE = (255, 255, 255)
 
+AGENT_WHITE = (255, 255, 255)
 AGENT_RED = (255, 0, 0)
 
 SCREEN_WIDTH = 1920
@@ -59,16 +59,13 @@ class Simulation(arcade.Window):
     def __init__(self):
         # Show a window
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, "Simulation")
-
         # A sprite list contains a list of sprites that can be easily manipulated
         self.agent_list = arcade.SpriteList()
         self.ennemis_list = arcade.SpriteList()
-
         # Create the agents
         for i in range(AGENT_COUNT):
             # Pick a random position on the screen
             position = (random.randrange(SCREEN_WIDTH), random.randrange(SCREEN_HEIGHT))
-
             # Create the agent and add it to the list
             agent = Agent(position)
             agent.color = (255, 255, 255)
@@ -77,7 +74,6 @@ class Simulation(arcade.Window):
         for i in range(AGENT_INFECTED_COUNT):
             # Pick a random position on the screen
             position = (random.randrange(SCREEN_WIDTH), random.randrange(SCREEN_HEIGHT))
-
             # Create the agent and add it to the list
             agent = Agent(position)
             agent.color = (255, 0, 0)
@@ -92,9 +88,8 @@ class Simulation(arcade.Window):
                 self.agent_list.remove(enemy)
                 enemy.color = (255, 0, 0)
                 enemy.update()
-
-            self.agent_list.update()
-            self.ennemis_list.update()
+        self.agent_list.update()
+        self.ennemis_list.update()
 
     def on_draw(self):
         # Clear the previous screen
